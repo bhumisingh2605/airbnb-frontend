@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // Base URL of your Spring Boot backend
-const BASE_URL = "http://localhost:8080";
+const BASE_URL = "http://airbnb-backend-env.eba-uj53pkte.us-east-1.elasticbeanstalk.com/api/v1";
 
 // Create axios instance (recommended)
 const api = axios.create({

@@ -5,9 +5,15 @@ function PropertyCard({ property }) {
   const [liked, setLiked] = useState(false);
   const navigate = useNavigate();
 
-  // ✅ Safe fallback values
+  // ✅ FIXED IMAGE HANDLING
   const image =
-    property.image || "https://source.unsplash.com/400x300/?hotel";
+    property.image && property.image.startsWith("http")
+      ? property.image.includes("?")
+        ? property.image
+        : property.image + "?w=800"
+      : "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800";
+
+  // ✅ Safe fallback values
   const rating = property.rating || "New";
   const guests = property.guests || 2;
   const bedrooms = property.bedrooms || 1;
@@ -22,14 +28,14 @@ function PropertyCard({ property }) {
       <div className="relative overflow-hidden">
         <img
           src={image}
-          alt={property.name}
+          alt={property.name || "Property"}
           className="w-full h-52 object-cover transform hover:scale-110 transition duration-500"
         />
 
         {/* ❤️ WISHLIST BUTTON */}
         <button
           onClick={(e) => {
-            e.stopPropagation(); // prevent card click
+            e.stopPropagation();
             setLiked(!liked);
           }}
           className="absolute top-3 right-3 bg-white p-2 rounded-full shadow-md hover:scale-110 transition"
@@ -40,7 +46,6 @@ function PropertyCard({ property }) {
 
       {/* 📄 DETAILS */}
       <div className="p-4">
-
         {/* TITLE + RATING */}
         <div className="flex justify-between items-center">
           <h2 className="font-semibold text-lg">
@@ -71,7 +76,7 @@ function PropertyCard({ property }) {
         {/* 🔥 BUTTON */}
         <button
           onClick={(e) => {
-            e.stopPropagation(); // prevent card click
+            e.stopPropagation();
             navigate(`/listing/${property.id}`);
           }}
           className="mt-4 w-full bg-black text-white py-2 rounded-xl hover:bg-gray-800 transition"

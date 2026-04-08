@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import API from "../services/api";
 import PropertyCard from "../components/PropertyCard";
 
 function Home() {
@@ -10,44 +9,26 @@ function Home() {
     fetchProperties();
   }, []);
 
-  const fetchProperties = async () => {
+  async function fetchProperties() {
     try {
       console.log("🚀 Calling API...");
 
-      const res = await API.get("/properties");
+      const response = await fetch(
+        "http://airbnb-backend-env.eba-uj53pkte.us-east-1.elasticbeanstalk.com/api/v1/hotels"
+      );
 
-      console.log("🔥 FULL RESPONSE:", res);
-      console.log("🔥 DATA:", res.data);
+      const result = await response.json();
 
-      // ✅ IMPORTANT FIX
-      const data = Array.isArray(res.data)
-        ? res.data
-        : res.data?.data || [];
+      console.log("🔥 API RESPONSE:", result);
 
-      setProperties(data);
-
-    } catch (err) {
-      console.error("❌ API ERROR:", err);
-
-      // 🔥 FALLBACK (direct fetch)
-      try {
-        const res = await fetch(
-          "http://localhost:8080/api/v1/properties"
-        );
-        const data = await res.json();
-
-        console.log("🔥 FALLBACK DATA:", data);
-
-        setProperties(data || []);
-      } catch (e) {
-        console.error("❌ FALLBACK FAILED:", e);
-        setProperties([]);
-      }
-
+      setProperties(result.content || []);
+    } catch (error) {
+      console.error("❌ API ERROR:", error);
+      setProperties([]);
     } finally {
       setLoading(false);
     }
-  };
+  }
 
   if (loading) {
     return <p className="text-center mt-20">Loading...</p>;
@@ -55,7 +36,6 @@ function Home() {
 
   return (
     <div className="p-6 max-w-6xl mx-auto">
-
       <h1 className="text-3xl font-bold mb-6">
         Available Properties
       </h1>
@@ -66,12 +46,11 @@ function Home() {
         </p>
       ) : (
         <div className="grid md:grid-cols-3 gap-6">
-          {properties.map((p) => (
-            <PropertyCard key={p.id} property={p} />
+          {properties.map((property) => (
+            <PropertyCard key={property.id} property={property} />
           ))}
         </div>
       )}
-
     </div>
   );
 }
