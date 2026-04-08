@@ -5,7 +5,7 @@ console.log("🌐 API URL:", import.meta.env.VITE_API_URL);
 
 // ✅ FALLBACK (VERY IMPORTANT 🔥)
 const BASE_URL =
-  import.meta.env.VITE_API_URL || "http://localhost:8080/api/v1";
+  "https://airbnb-backend-env.eba-uj53pkte.us-east-1.elasticbeanstalk.com/api/v1";
 
 // ✅ Create instance
 const API = axios.create({

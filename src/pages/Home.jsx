@@ -13,9 +13,9 @@ function Home() {
     try {
       console.log("🚀 Calling API...");
 
-      const response = await fetch(
-        "http://airbnb-backend-env.eba-uj53pkte.us-east-1.elasticbeanstalk.com/api/v1/hotels"
-      );
+    const response = await fetch(
+      `${import.meta.env.VITE_API_URL}/hotels`
+    );
 
       const result = await response.json();
 
