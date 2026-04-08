@@ -7,7 +7,7 @@ import Bookings from "./pages/Bookings";
 import MyBookings from "./pages/MyBookings"; // ✅ FIXED
 
 import Login from "./pages/Login";
-import Signup from "./pages/Signup";
+import Signup from "./pages/SignUp";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import PropertyDetails from "./pages/PropertyDetails";
 
